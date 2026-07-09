@@ -50,6 +50,20 @@ async function pollinationsOne(prompt, seed, env) {
   }
 }
 
+// Cloudflare Workers AI — runs INSIDE Cloudflare (no external IP, no token, free
+// daily tier). Best option for a CF-hosted site. Needs an "AI" binding (dashboard).
+async function cfaiImages(prompt, env) {
+  if (!env.AI) throw new Error("Workers AI binding 'AI' not set (add it in CF → Settings → Functions → Bindings)");
+  const model = "@cf/black-forest-labs/flux-1-schnell";
+  const out = [];
+  for (let i = 0; i < N_IMAGES; i++) {
+    const r = await env.AI.run(model, { prompt: `${prompt} (variation ${i + 1})`, steps: 6 });
+    const b64 = r.image || r; // flux-1-schnell returns { image: <base64 jpeg> }
+    out.push(`data:image/jpeg;base64,${b64}`);
+  }
+  return out;
+}
+
 async function huggingfaceOne(prompt, seed, env) {
   const key = env.HF_API_KEY;
   if (!key) throw new Error("HF_API_KEY not set");
@@ -109,9 +123,9 @@ function mock(prompt) {
 export async function onRequestGet({ env }) {
   return Response.json({
     ok: true,
-    provider: (env.IMAGE_PROVIDER || "pollinations (default)").toLowerCase(),
+    provider: (env.IMAGE_PROVIDER || (env.AI ? "cfai (default)" : "mock (default)")).toLowerCase(),
+    aiBinding: !!env.AI,
     tokenPresent: !!env.POLLINATIONS_TOKEN,
-    tokenPrefix: env.POLLINATIONS_TOKEN ? env.POLLINATIONS_TOKEN.slice(0, 3) : null,
   });
 }
 
@@ -121,11 +135,14 @@ export async function onRequestPost({ request, env }) {
     if (!description || !description.trim()) {
       return Response.json({ error: "Describe your tattoo first." }, { status: 400 });
     }
-    const provider = (env.IMAGE_PROVIDER || "pollinations").toLowerCase();
+    // Default to Cloudflare Workers AI when its binding exists (reliable on CF); else mock.
+    const provider = (env.IMAGE_PROVIDER || (env.AI ? "cfai" : "mock")).toLowerCase();
     const prompt = buildTattooPrompt(description, style);
     let images;
     if (provider === "mock") {
       images = mock(prompt);
+    } else if (provider === "cfai") {
+      images = await cfaiImages(prompt, env);
     } else if (provider === "pollinations") {
       images = [];
       for (let i = 0; i < N_IMAGES; i++) images.push(await pollinationsOne(prompt, 1000 + i, env));
@@ -137,7 +154,7 @@ export async function onRequestPost({ request, env }) {
     } else {
       images = mock(prompt);
     }
-    return Response.json({ prompt, images });
+    return Response.json({ prompt, images, provider });
   } catch (err) {
     return Response.json({ error: err.message || "Generation failed." }, { status: 500 });
   }
