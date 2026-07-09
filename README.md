@@ -57,3 +57,21 @@ don't re-add numbers you can't back up.
 
 ## Notes
 - Generated concept images are AI reference art, labeled as such in the UI and Terms.
+
+## Deploy to Cloudflare Pages (from GitHub)
+The `/api/generate` backend runs as a **Pages Function** (`functions/api/generate.js`),
+so the AI feature works serverless — no separate server needed.
+
+1. https://dash.cloudflare.com → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**.
+2. Authorize GitHub, pick **Vision-WRLD/vision-ink**.
+3. Build settings:
+   - Framework preset: **None**
+   - Build command: *(leave empty)*
+   - Build output directory: **`public`**
+4. **Environment variables** (Settings → Environment variables) — add:
+   - `IMAGE_PROVIDER` = `pollinations`
+   - `POLLINATIONS_TOKEN` = your `sk_...` token — click **Encrypt** (secret)
+5. **Save and Deploy** → you get `vision-ink.pages.dev`.
+6. If you add/change env vars after the first build, hit **Retry deployment** so the Function reloads them.
+
+The token lives ONLY in Cloudflare's encrypted env — never in the repo.
