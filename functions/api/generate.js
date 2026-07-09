@@ -103,6 +103,17 @@ function mock(prompt) {
   });
 }
 
+// Diagnostic: GET /api/generate → confirms whether the token/env reached the Function
+// WITHOUT calling the provider (isolates "env missing" from "rate-limited").
+export async function onRequestGet({ env }) {
+  return Response.json({
+    ok: true,
+    provider: (env.IMAGE_PROVIDER || "pollinations (default)").toLowerCase(),
+    tokenPresent: !!env.POLLINATIONS_TOKEN,
+    tokenPrefix: env.POLLINATIONS_TOKEN ? env.POLLINATIONS_TOKEN.slice(0, 3) : null,
+  });
+}
+
 export async function onRequestPost({ request, env }) {
   try {
     const { description, style } = await request.json();
