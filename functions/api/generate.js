@@ -28,11 +28,11 @@ function bytesToB64(bytes) {
 
 async function pollinationsOne(prompt, seed, env) {
   const tok = env.POLLINATIONS_TOKEN;
+  // Per Pollinations docs: backend auth = Authorization: Bearer header (NOT ?token=).
   const url =
     "https://image.pollinations.ai/prompt/" +
     encodeURIComponent(prompt) +
-    `?width=1024&height=1024&nologo=true&seed=${seed}` +
-    (tok ? `&token=${encodeURIComponent(tok)}` : "");
+    `?width=1024&height=1024&nologo=true&seed=${seed}`;
   const opts = tok ? { headers: { Authorization: `Bearer ${tok}` } } : {};
   for (let attempt = 0; attempt < 4; attempt++) {
     const res = await fetch(url, opts);
@@ -45,7 +45,8 @@ async function pollinationsOne(prompt, seed, env) {
       await new Promise((r) => setTimeout(r, 6000));
       continue;
     }
-    throw new Error(`Pollinations ${res.status}`);
+    const body = (await res.text()).slice(0, 240);
+    throw new Error(`Pollinations ${res.status} (tok:${tok ? "y" : "n"}): ${body}`);
   }
 }
 
