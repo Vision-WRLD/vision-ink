@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/site.css?v=3" />
+  <link rel="stylesheet" href="/css/site.css?v=4" />
 </head>
 <body>
   <div class="grain"></div><div class="vignette"></div>
@@ -80,6 +80,18 @@
         <p class="gen-hint">Concepts are AI reference art — your artist refines the final design with you before the needle. Nothing is stored.</p>
       </form>
 
+      <div class="prompt-guide reveal">
+        <h4>How to write your brief <small>— the more you give, the sharper the concept</small></h4>
+        <p class="pg-formula"><b>[</b>subject<b>] + [</b>composition<b>] + [</b>style<b>] + [</b>placement<b>] + [</b>detail<b>]</b></p>
+        <ol>
+          <li><b>Name the subject</b> clearly, then add 2–3 descriptors — pose, objects, symmetry.</li>
+          <li><b>Set the vibe</b>: “negative space”, “fine detail”, “bold solid fills”, or “minimal”.</li>
+          <li><b>Add placement</b>: forearm, sternum, full sleeve — it shapes the composition.</li>
+          <li><b>Keep it a phrase</b>, roughly 8–20 words. Pick a Style above; generate again for fresh takes.</li>
+        </ol>
+        <p class="pg-eg"><span>Try</span> <a class="pg-try" data-fill="twin daggers crossed, wrapped handles, roses at the base, symmetrical, ornamental linework">twin daggers crossed, wrapped handles, roses at the base, symmetrical, ornamental linework</a></p>
+      </div>
+
       <div id="gen-status" class="gen-status" role="status" aria-live="polite"></div>
 
       <div id="results" class="results" hidden>
@@ -126,7 +138,7 @@
     </div>
   </footer>
 
-  <script src="/js/site.js?v=3"></script>
-  <script src="/js/ai.js?v=3"></script>
+  <script src="/js/site.js?v=4"></script>
+  <script src="/js/ai.js?v=4"></script>
 </body>
 </html>

@@ -16,6 +16,15 @@
     })
   );
 
+  // clickable "Try" example in the prompt guide
+  document.querySelectorAll(".pg-try").forEach((a) =>
+    a.addEventListener("click", () => {
+      desc.value = a.dataset.fill;
+      desc.focus();
+      desc.scrollIntoView({ block: "center", behavior: "smooth" });
+    })
+  );
+
   const lines = [
     "Reading your idea…",
     "Engineering the stencil…",
