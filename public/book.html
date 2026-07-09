@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Book a Consult — VISION INK Tattoo</title>
+  <meta name="description" content="Request a free consult at VISION INK. Bring your idea or an AI concept and lock a date with a resident artist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/site.css?v=3" />
+</head>
+<body>
+  <div class="grain"></div><div class="vignette"></div>
+  <div class="scroll-progress" id="progress"></div>
+
+  <header class="nav">
+    <a class="brand" href="/index.html"><i>◆</i> VISION INK</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">≡</button>
+    <nav class="nav-links">
+      <a href="/gallery.html">Work</a>
+      <a href="/artists.html">Artists</a>
+      <a href="/ai.html">AI Studio</a>
+      <a href="/studio.html">The Studio</a>
+      <a href="/book.html" class="nav-cta">Book</a>
+    </nav>
+  </header>
+
+  <section class="hero page">
+    <div class="hero-bg" style="background-image:url('/img/t09.jpg')"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-inner">
+      <p class="eyebrow">Appointment only</p>
+      <h1>Book a <span class="accent">Consult</span></h1>
+      <p class="lead">Free 30 minutes. Bring an idea or an AI concept — we'll reply within 24 hours.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap book-grid">
+      <form class="book-form reveal" data-demo>
+        <div><label for="bn">Name</label><input id="bn" type="text" required placeholder="Your name" /></div>
+        <div><label for="be">Email</label><input id="be" type="email" required placeholder="you@email.com" /></div>
+        <div><label for="ba">Preferred artist</label>
+          <select id="ba">
+            <option value="">No preference</option>
+            <option>Marlo Vane — Blackwork</option>
+            <option>Rey Alcott — Fine line</option>
+            <option>Dex Okafor — Color realism</option>
+            <option>Sable Ito — Japanese / geometric</option>
+          </select>
+        </div>
+        <div><label for="bp">Placement</label><input id="bp" type="text" placeholder="e.g. inner forearm" /></div>
+        <div><label for="bi">Your idea</label><textarea id="bi" rows="4" placeholder="Describe the tattoo, size, and any references. Paste an AI concept description here too."></textarea></div>
+        <button type="submit" class="btn btn-primary btn-lg">Request consult</button>
+        <p class="book-note" hidden>Got it — we'll be in touch within 24 hours. (Demo form — not yet wired to email.)</p>
+      </form>
+
+      <div class="reveal" data-d="1">
+        <div class="info-block">
+          <h4>Hours</h4>
+          <div class="hours"><span>Tue – Fri</span><span>11:00 – 20:00</span></div>
+          <div class="hours"><span>Saturday</span><span>11:00 – 18:00</span></div>
+          <div class="hours" style="border:0"><span>Sun – Mon</span><span>Closed</span></div>
+        </div>
+        <div class="info-block">
+          <h4>Find us</h4>
+          <p>114 Cedar St, Unit 3<br />Downtown · buzzer #3<br />Street parking after 6pm</p>
+        </div>
+        <div class="info-block">
+          <h4>Before you book</h4>
+          <p>18+ with photo ID. A small deposit secures your date and comes off the final price. Custom work only — no copies of another artist's piece.</p>
+        </div>
+        <div class="info-block" style="border-color:var(--accent)">
+          <h4>No idea yet?</h4>
+          <p style="margin-bottom:16px">Generate three concepts first, then bring your favourite.</p>
+          <a href="/ai.html" class="btn btn-ghost">Open AI Studio</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div><div class="brand"><i style="color:var(--accent)">◆</i> VISION INK</div><p>Private, appointment-only tattoo studio. Custom work only — from your idea to healed skin.</p></div>
+        <div><h5>Explore</h5><a href="/gallery.html">Work</a><a href="/artists.html">Artists</a><a href="/ai.html">AI Studio</a><a href="/studio.html">The Studio</a></div>
+        <div><h5>Visit</h5><a href="/book.html">Book a consult</a><p style="padding:5px 0">114 Cedar St, Unit 3<br />Open Tue–Sat, 11–8</p></div>
+        <div><h5>Follow</h5><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Email us</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> VISION INK Studio · By appointment only</span>
+        <span><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/site.js?v=3"></script>
+</body>
+</html>

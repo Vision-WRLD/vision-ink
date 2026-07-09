@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>AI Concept Studio — VISION INK Tattoo</title>
+  <meta name="description" content="Describe your tattoo idea and generate three custom, stencil-ready concepts with AI. Free to use, then bring them to your VISION INK artist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/site.css?v=3" />
+</head>
+<body>
+  <div class="grain"></div><div class="vignette"></div>
+  <div class="scroll-progress" id="progress"></div>
+
+  <header class="nav">
+    <a class="brand" href="/index.html"><i>◆</i> VISION INK</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">≡</button>
+    <nav class="nav-links">
+      <a href="/gallery.html">Work</a>
+      <a href="/artists.html">Artists</a>
+      <a href="/ai.html">AI Studio</a>
+      <a href="/studio.html">The Studio</a>
+      <a href="/book.html" class="nav-cta">Book</a>
+    </nav>
+  </header>
+
+  <!-- PAGE HERO (static) -->
+  <section class="hero page">
+    <div class="hero-bg" style="background-image:url('/img/t35.jpg')"></div>
+    <div class="hero-scrim"></div>
+    <div class="hero-inner">
+      <p class="eyebrow">The feature</p>
+      <h1>AI Concept<br /><span class="accent">Studio</span></h1>
+      <p class="lead">Describe it. See three directions. Bring them to the chair.</p>
+    </div>
+  </section>
+
+  <!-- TOOL -->
+  <section>
+    <div class="wrap ai-tool">
+      <div class="section-head">
+        <span class="idx" data-idx="01">Describe it</span>
+        <h2 class="rise"><span>Type your idea</span></h2>
+        <p>Subject, mood, placement, references — the more you give, the sharper the concept. We engineer it into a clean, stencil-ready prompt and render three directions.</p>
+      </div>
+
+      <form id="gen-form" class="ai-form reveal">
+        <textarea id="desc" maxlength="600" rows="3" required
+          placeholder="e.g. A geometric wolf howling at a cracked moon, fine linework, forearm piece, lots of negative space…"></textarea>
+
+        <div class="ai-row">
+          <div class="ai-field">
+            <label for="style">Style</label>
+            <select id="style">
+              <option value="any">Artist's choice</option>
+              <option value="fine line, black and grey, delicate">Fine line</option>
+              <option value="bold blackwork, heavy contrast, solid fills">Blackwork</option>
+              <option value="geometric, dotwork, symmetry, sacred geometry">Geometric / dotwork</option>
+              <option value="neo-traditional, bold color, clean outlines">Neo-traditional</option>
+              <option value="black and grey realism, high detail shading">Realism</option>
+              <option value="japanese irezumi, flowing, waves and clouds">Japanese / irezumi</option>
+              <option value="cyber-sigilism, thin sharp lines, abstract">Cyber-sigilism</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary" id="gen-btn"><span class="btn-label">Generate 3 concepts</span></button>
+        </div>
+
+        <div class="ai-chips">
+          <button type="button" data-p="A snake coiled around a dagger, fine line black and grey, forearm">Snake & dagger</button>
+          <button type="button" data-p="Geometric mountain range inside a circle, dotwork shading, dotted linework">Geometric mountains</button>
+          <button type="button" data-p="A moth with detailed wings and a crescent moon, dark blackwork, sternum piece">Moth & moon</button>
+          <button type="button" data-p="Koi fish swimming upward with water splashes, japanese irezumi, half sleeve">Koi sleeve</button>
+        </div>
+        <p class="gen-hint">Concepts are AI reference art — your artist refines the final design with you before the needle. Nothing is stored.</p>
+      </form>
+
+      <div id="gen-status" class="gen-status" role="status" aria-live="polite"></div>
+
+      <div id="results" class="results" hidden>
+        <div class="result-card" data-i="0"><span class="badge">Concept A</span><div class="result-frame"></div></div>
+        <div class="result-card" data-i="1"><span class="badge">Concept B</span><div class="result-frame"></div></div>
+        <div class="result-card" data-i="2"><span class="badge">Concept C</span><div class="result-frame"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="band-panel divider">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="idx" data-idx="02">How it works</span>
+        <h2 class="rise"><span>Idea to chair</span></h2>
+      </div>
+      <div class="ai-steps">
+        <div class="s reveal"><b>01</b><h4>Describe</h4><p>Write what you want in plain words. Pick a style or leave it to the artist.</p></div>
+        <div class="s reveal" data-d="1"><b>02</b><h4>Generate</h4><p>We turn your words into a stencil-ready prompt and render three distinct directions in seconds.</p></div>
+        <div class="s reveal" data-d="2"><b>03</b><h4>Refine at the chair</h4><p>Save the one you love and book a consult — your artist redraws it into a custom, tattoo-ready design.</p></div>
+      </div>
+      <div class="reveal" data-d="1" style="margin-top:40px">
+        <a href="/book.html" class="btn btn-primary btn-lg">Book with your concept</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <div>
+          <div class="brand"><i style="color:var(--accent)">◆</i> VISION INK</div>
+          <p>Private, appointment-only tattoo studio. Custom work only — from your idea to healed skin.</p>
+        </div>
+        <div><h5>Explore</h5><a href="/gallery.html">Work</a><a href="/artists.html">Artists</a><a href="/ai.html">AI Studio</a><a href="/studio.html">The Studio</a></div>
+        <div><h5>Visit</h5><a href="/book.html">Book a consult</a><p style="padding:5px 0">114 Cedar St, Unit 3<br />Open Tue–Sat, 11–8</p></div>
+        <div><h5>Follow</h5><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Email us</a></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> VISION INK Studio · By appointment only</span>
+        <span><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/site.js?v=3"></script>
+  <script src="/js/ai.js?v=3"></script>
+</body>
+</html>
