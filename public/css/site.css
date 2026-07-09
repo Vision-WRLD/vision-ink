@@ -349,6 +349,36 @@ section { position: relative; padding: clamp(64px, 10vw, 132px) 0; }
 .ai-chips button:hover { color: var(--accent); border-color: var(--accent); }
 .gen-hint { color: var(--faint); font-size: 0.82rem; margin: 16px 0 0; }
 
+/* ---- guided prompt builder (wizard) ---- */
+.steps-bar { display: flex; gap: 8px; margin-bottom: 22px; }
+.steps-bar .dot { flex: 1; height: 4px; background: var(--line-2); border-radius: 2px; transition: background 0.3s; }
+.steps-bar .dot.done { background: var(--muted); }
+.steps-bar .dot.active { background: var(--bone); }
+.step-panel { animation: stepIn 0.35s var(--ease); }
+@keyframes stepIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.step-k { font-family: var(--cond); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.72rem; color: var(--muted); margin: 0 0 8px; }
+.step-q { font-family: var(--display); text-transform: uppercase; font-size: clamp(1.4rem, 3.5vw, 2.1rem); line-height: 1; margin: 0 0 18px; }
+.b-input { width: 100%; background: var(--ink-2); border: 1px solid var(--line-2); border-radius: 2px;
+  color: var(--bone); font-family: var(--body); font-size: 1.08rem; padding: 16px; transition: border-color 0.2s; }
+.b-input:focus { outline: none; border-color: var(--bone); }
+.b-input::placeholder { color: var(--faint); }
+.chips-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+.chips-row button { font-family: var(--body); font-size: 0.85rem; color: var(--bone-2);
+  background: var(--ink-2); border: 1px solid var(--line-2); padding: 9px 15px; border-radius: 999px;
+  cursor: pointer; transition: all 0.18s; }
+.chips-row button:hover { border-color: var(--bone); color: var(--bone); }
+.chips-row button.active { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+.chips-row .chip-lead { align-self: center; font-family: var(--cond); text-transform: uppercase;
+  letter-spacing: 0.14em; font-size: 0.68rem; color: var(--faint); margin-right: 2px; }
+.b-preview { margin-top: 26px; padding: 16px 18px; background: var(--ink-2); border: 1px dashed var(--line-2); border-radius: 2px; }
+.b-preview span { font-family: var(--cond); text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.66rem; color: var(--muted); display: block; margin-bottom: 6px; }
+.b-preview em { font-style: normal; color: var(--bone); font-size: 1rem; line-height: 1.5; }
+.b-preview em .pv-style { color: var(--muted); }
+.b-nav { display: flex; gap: 12px; margin-top: 20px; }
+.b-nav .btn { min-width: 120px; }
+.b-nav #b-next, .b-nav #b-generate { margin-left: auto; }
+.b-cooldown { color: var(--muted); font-family: var(--cond); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; margin-top: 14px; min-height: 1em; }
+
 /* prompt-writing guide (client-facing) */
 .prompt-guide { border: 1px solid var(--line); background: var(--ink-2); padding: clamp(18px, 3vw, 26px); margin-top: 18px; }
 .prompt-guide h4 { font-family: var(--cond); text-transform: uppercase; letter-spacing: 0.08em; font-size: 1.05rem; font-weight: 600; margin: 0; }

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/site.css?v=4" />
+  <link rel="stylesheet" href="/css/site.css?v=5" />
 </head>
 <body>
   <div class="grain"></div><div class="vignette"></div>
@@ -50,46 +50,89 @@
         <p>Subject, mood, placement, references — the more you give, the sharper the concept. We engineer it into a clean, stencil-ready prompt and render three directions.</p>
       </div>
 
-      <form id="gen-form" class="ai-form reveal">
-        <textarea id="desc" maxlength="600" rows="3" required
-          placeholder="e.g. A geometric wolf howling at a cracked moon, fine linework, forearm piece, lots of negative space…"></textarea>
+      <div class="ai-form reveal" id="builder">
+        <div class="steps-bar">
+          <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
 
-        <div class="ai-row">
-          <div class="ai-field">
-            <label for="style">Style</label>
-            <select id="style">
-              <option value="any">Artist's choice</option>
-              <option value="fine line, black and grey, delicate">Fine line</option>
-              <option value="bold blackwork, heavy contrast, solid fills">Blackwork</option>
-              <option value="geometric, dotwork, symmetry, sacred geometry">Geometric / dotwork</option>
-              <option value="neo-traditional, bold color, clean outlines">Neo-traditional</option>
-              <option value="black and grey realism, high detail shading">Realism</option>
-              <option value="japanese irezumi, flowing, waves and clouds">Japanese / irezumi</option>
-              <option value="cyber-sigilism, thin sharp lines, abstract">Cyber-sigilism</option>
-            </select>
+        <!-- STEP 1 — the idea (free) -->
+        <div class="step-panel" data-step="1">
+          <p class="step-k">Step 1 of 4 · Your idea</p>
+          <h3 class="step-q">What do you want tattooed?</h3>
+          <input id="b-subject" class="b-input" maxlength="140" placeholder="In your own words — e.g. twin daggers, a howling wolf, a rose…" />
+          <div class="chips-row" data-target="b-subject" data-mode="set">
+            <span class="chip-lead">Or start from</span>
+            <button type="button">Snake &amp; dagger</button>
+            <button type="button">A howling wolf</button>
+            <button type="button">Koi fish</button>
+            <button type="button">A moth and moon</button>
           </div>
-          <button type="submit" class="btn btn-primary" id="gen-btn"><span class="btn-label">Generate 3 concepts</span></button>
         </div>
 
-        <div class="ai-chips">
-          <button type="button" data-p="A snake coiled around a dagger, fine line black and grey, forearm">Snake & dagger</button>
-          <button type="button" data-p="Geometric mountain range inside a circle, dotwork shading, dotted linework">Geometric mountains</button>
-          <button type="button" data-p="A moth with detailed wings and a crescent moon, dark blackwork, sternum piece">Moth & moon</button>
-          <button type="button" data-p="Koi fish swimming upward with water splashes, japanese irezumi, half sleeve">Koi sleeve</button>
+        <!-- STEP 2 — details (free) -->
+        <div class="step-panel" data-step="2" hidden>
+          <p class="step-k">Step 2 of 4 · Details</p>
+          <h3 class="step-q">Add any details</h3>
+          <input id="b-details" class="b-input" maxlength="180" placeholder="Pose, objects, symmetry — e.g. crossed, wrapped handles, roses at the base" />
+          <div class="chips-row" data-target="b-details" data-mode="append">
+            <span class="chip-lead">Add</span>
+            <button type="button">symmetrical</button>
+            <button type="button">ornamental linework</button>
+            <button type="button">flowers around it</button>
+            <button type="button">bold outline</button>
+          </div>
         </div>
+
+        <!-- STEP 3 — style (pick one) -->
+        <div class="step-panel" data-step="3" hidden>
+          <p class="step-k">Step 3 of 4 · Style</p>
+          <h3 class="step-q">Pick a style</h3>
+          <div class="chips-row single" id="style-chips">
+            <button type="button" data-v="any" class="active">Artist's choice</button>
+            <button type="button" data-v="fine line, black and grey, delicate">Fine line</button>
+            <button type="button" data-v="bold blackwork, heavy contrast, solid fills">Blackwork</button>
+            <button type="button" data-v="geometric, dotwork, symmetry, sacred geometry">Geometric</button>
+            <button type="button" data-v="neo-traditional, bold color, clean outlines">Neo-traditional</button>
+            <button type="button" data-v="black and grey realism, high detail shading">Realism</button>
+            <button type="button" data-v="japanese irezumi, flowing, waves and clouds">Japanese</button>
+            <button type="button" data-v="cyber-sigilism, thin sharp lines, abstract">Cyber-sigilism</button>
+          </div>
+        </div>
+
+        <!-- STEP 4 — placement + finish -->
+        <div class="step-panel" data-step="4" hidden>
+          <p class="step-k">Step 4 of 4 · Placement &amp; finish</p>
+          <h3 class="step-q">Where, and any finish?</h3>
+          <input id="b-place" class="b-input" maxlength="80" placeholder="Placement — e.g. inner forearm, sternum, full sleeve" />
+          <div class="chips-row" data-target="b-place" data-mode="set">
+            <span class="chip-lead">Placement</span>
+            <button type="button">Forearm</button>
+            <button type="button">Sternum</button>
+            <button type="button">Full sleeve</button>
+            <button type="button">Back</button>
+            <button type="button">Calf</button>
+          </div>
+          <div class="chips-row multi" id="vibe-chips">
+            <span class="chip-lead">Finish</span>
+            <button type="button" data-v="lots of negative space">Negative space</button>
+            <button type="button" data-v="fine intricate detail">Fine detail</button>
+            <button type="button" data-v="bold solid fills">Bold fills</button>
+            <button type="button" data-v="minimal and clean">Minimal</button>
+          </div>
+        </div>
+
+        <div class="b-preview">
+          <span>Your brief so far</span>
+          <em id="b-brief">—</em>
+        </div>
+
+        <div class="b-nav">
+          <button type="button" class="btn btn-ghost" id="b-back" hidden>Back</button>
+          <button type="button" class="btn btn-primary" id="b-next">Next</button>
+          <button type="button" class="btn btn-primary" id="b-generate" hidden><span class="btn-label">Generate 3 concepts</span></button>
+        </div>
+        <p class="b-cooldown" id="b-cooldown"></p>
         <p class="gen-hint">Concepts are AI reference art — your artist refines the final design with you before the needle. Nothing is stored.</p>
-      </form>
-
-      <div class="prompt-guide reveal">
-        <h4>How to write your brief <small>— the more you give, the sharper the concept</small></h4>
-        <p class="pg-formula"><b>[</b>subject<b>] + [</b>composition<b>] + [</b>style<b>] + [</b>placement<b>] + [</b>detail<b>]</b></p>
-        <ol>
-          <li><b>Name the subject</b> clearly, then add 2–3 descriptors — pose, objects, symmetry.</li>
-          <li><b>Set the vibe</b>: “negative space”, “fine detail”, “bold solid fills”, or “minimal”.</li>
-          <li><b>Add placement</b>: forearm, sternum, full sleeve — it shapes the composition.</li>
-          <li><b>Keep it a phrase</b>, roughly 8–20 words. Pick a Style above; generate again for fresh takes.</li>
-        </ol>
-        <p class="pg-eg"><span>Try</span> <a class="pg-try" data-fill="twin daggers crossed, wrapped handles, roses at the base, symmetrical, ornamental linework">twin daggers crossed, wrapped handles, roses at the base, symmetrical, ornamental linework</a></p>
       </div>
 
       <div id="gen-status" class="gen-status" role="status" aria-live="polite"></div>
@@ -138,7 +181,7 @@
     </div>
   </footer>
 
-  <script src="/js/site.js?v=4"></script>
-  <script src="/js/ai.js?v=4"></script>
+  <script src="/js/site.js?v=5"></script>
+  <script src="/js/ai.js?v=5"></script>
 </body>
 </html>
