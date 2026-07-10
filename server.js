@@ -17,7 +17,7 @@ const N_IMAGES = 3;
 function buildTattooPrompt(userText, style) {
   // Lead with the STYLE so the model weights it, then the subject, then finish cues.
   const lead = style && style !== "any" ? `${style} tattoo design` : "tattoo design";
-  return `${lead} of ${userText.trim()}. Black ink on a clean white background, high contrast, crisp confident linework, centered composition, stencil-ready professional tattoo flash art.`;
+  return `${lead} of ${userText.trim()}, isolated centered on a clean solid white background. Bold clean confident linework, crisp sharp edges, intricate high detail, professional tattoo flash artwork, high quality, no background clutter, no text.`;
 }
 
 async function generateOpenAI(prompt) {

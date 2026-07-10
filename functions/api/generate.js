@@ -9,7 +9,7 @@ const N_IMAGES = 3;
 function buildTattooPrompt(userText, style) {
   // Lead with the STYLE so the model weights it, then the subject, then finish cues.
   const lead = style && style !== "any" ? `${style} tattoo design` : "tattoo design";
-  return `${lead} of ${userText.trim()}. Black ink on a clean white background, high contrast, crisp confident linework, centered composition, stencil-ready professional tattoo flash art.`;
+  return `${lead} of ${userText.trim()}, isolated centered on a clean solid white background. Bold clean confident linework, crisp sharp edges, intricate high detail, professional tattoo flash artwork, high quality, no background clutter, no text.`;
 }
 
 function bytesToB64(bytes) {
@@ -49,12 +49,20 @@ async function pollinationsOne(prompt, seed, env) {
 // daily tier). Best option for a CF-hosted site. Needs an "AI" binding (dashboard).
 async function cfaiImages(prompt, env) {
   if (!env.AI) throw new Error("Workers AI binding 'AI' not set (add it in CF → Settings → Functions → Bindings)");
-  const model = "@cf/black-forest-labs/flux-1-schnell";
+  // lucid-origin: high prompt-adherence, base64 output, up to 40 steps + guidance control.
+  const model = "@cf/leonardo/lucid-origin";
   const out = [];
   const base = Math.floor(Math.random() * 2_000_000_000); // random each call → regenerate gives fresh art
   for (let i = 0; i < N_IMAGES; i++) {
-    const r = await env.AI.run(model, { prompt: `${prompt} (variation ${i + 1})`, steps: 6, seed: base + i });
-    const b64 = r.image || r; // flux-1-schnell returns { image: <base64 jpeg> }
+    const r = await env.AI.run(model, {
+      prompt: `${prompt} (variation ${i + 1})`,
+      num_steps: 28,
+      guidance: 6,
+      width: 1024,
+      height: 1024,
+      seed: base + i,
+    });
+    const b64 = r.image || r; // returns { image: <base64 jpg> }
     out.push(`data:image/jpeg;base64,${b64}`);
   }
   return out;
