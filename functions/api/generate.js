@@ -7,14 +7,9 @@
 const N_IMAGES = 3;
 
 function buildTattooPrompt(userText, style) {
-  const styleLine = style && style !== "any" ? `Style: ${style}.` : "";
-  return [
-    "Professional tattoo design concept, high detail, clean linework,",
-    "isolated on a plain light background, ink illustration, stencil-ready,",
-    styleLine,
-    "Subject:",
-    userText.trim(),
-  ].filter(Boolean).join(" ");
+  // Lead with the STYLE so the model weights it, then the subject, then finish cues.
+  const lead = style && style !== "any" ? `${style} tattoo design` : "tattoo design";
+  return `${lead} of ${userText.trim()}. Black ink on a clean white background, high contrast, crisp confident linework, centered composition, stencil-ready professional tattoo flash art.`;
 }
 
 function bytesToB64(bytes) {
