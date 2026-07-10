@@ -378,6 +378,7 @@ section { position: relative; padding: clamp(64px, 10vw, 132px) 0; }
 .b-nav .btn { min-width: 120px; }
 .b-nav #b-next, .b-nav #b-generate { margin-left: auto; }
 .b-cooldown { color: var(--muted); font-family: var(--cond); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; margin-top: 14px; min-height: 1em; }
+.results-actions { display: flex; gap: 12px; justify-content: center; margin-top: 24px; flex-wrap: wrap; }
 
 /* prompt-writing guide (client-facing) */
 .prompt-guide { border: 1px solid var(--line); background: var(--ink-2); padding: clamp(18px, 3vw, 26px); margin-top: 18px; }

@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/site.css?v=6" />
+  <link rel="stylesheet" href="/css/site.css?v=7" />
 </head>
 <body>
   <div class="grain"></div><div class="vignette"></div>
@@ -191,7 +191,7 @@
           <button type="button" class="btn btn-primary" id="b-generate" hidden><span class="btn-label">Generate 3 concepts</span></button>
         </div>
         <p class="b-cooldown" id="b-cooldown"></p>
-        <p class="gen-hint">Concepts are AI reference art — your artist refines the final design with you before the needle. Nothing is stored.</p>
+        <p class="gen-hint" id="b-quick">Even one word works — type your idea and hit <b>Generate</b> any time. The extra steps are optional and just sharpen the result.</p>
       </div>
 
       <div id="gen-status" class="gen-status" role="status" aria-live="polite"></div>
@@ -200,6 +200,11 @@
         <div class="result-card" data-i="0"><span class="badge">Concept A</span><div class="result-frame"></div></div>
         <div class="result-card" data-i="1"><span class="badge">Concept B</span><div class="result-frame"></div></div>
         <div class="result-card" data-i="2"><span class="badge">Concept C</span><div class="result-frame"></div></div>
+      </div>
+
+      <div class="results-actions" id="results-actions" hidden>
+        <button type="button" class="btn btn-primary" id="b-regen"><span class="btn-label">↻ Regenerate — fresh set</span></button>
+        <button type="button" class="btn btn-ghost" id="b-restart">Start a new idea</button>
       </div>
     </div>
   </section>
@@ -240,7 +245,7 @@
     </div>
   </footer>
 
-  <script src="/js/site.js?v=6"></script>
-  <script src="/js/ai.js?v=6"></script>
+  <script src="/js/site.js?v=7"></script>
+  <script src="/js/ai.js?v=7"></script>
 </body>
 </html>

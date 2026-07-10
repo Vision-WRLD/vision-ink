@@ -160,13 +160,16 @@ app.post("/api/generate", async (req, res) => {
       images = generateMock(prompt);
     } else if (PROVIDER === "pollinations") {
       // Free tier allows only 1 request in-flight per IP — run sequentially.
+      // Random base seed each call → regenerate gives fresh art.
+      const base = Math.floor(Math.random() * 2_000_000_000);
       images = [];
       for (let i = 0; i < N_IMAGES; i++) {
-        images.push(await generatePollinationsOne(prompt, 1000 + i));
+        images.push(await generatePollinationsOne(prompt, base + i));
       }
     } else if (PROVIDER === "huggingface") {
+      const base = Math.floor(Math.random() * 2_000_000_000);
       images = await Promise.all(
-        Array.from({ length: N_IMAGES }, (_, i) => generateHuggingFaceOne(prompt, 1000 + i))
+        Array.from({ length: N_IMAGES }, (_, i) => generateHuggingFaceOne(prompt, base + i))
       );
     } else if (PROVIDER === "stability") {
       images = await Promise.all(

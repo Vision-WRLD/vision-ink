@@ -51,8 +51,9 @@ async function cfaiImages(prompt, env) {
   if (!env.AI) throw new Error("Workers AI binding 'AI' not set (add it in CF → Settings → Functions → Bindings)");
   const model = "@cf/black-forest-labs/flux-1-schnell";
   const out = [];
+  const base = Math.floor(Math.random() * 2_000_000_000); // random each call → regenerate gives fresh art
   for (let i = 0; i < N_IMAGES; i++) {
-    const r = await env.AI.run(model, { prompt: `${prompt} (variation ${i + 1})`, steps: 6 });
+    const r = await env.AI.run(model, { prompt: `${prompt} (variation ${i + 1})`, steps: 6, seed: base + i });
     const b64 = r.image || r; // flux-1-schnell returns { image: <base64 jpeg> }
     out.push(`data:image/jpeg;base64,${b64}`);
   }
