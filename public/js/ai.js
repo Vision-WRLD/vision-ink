@@ -20,6 +20,7 @@
   const subject = document.getElementById("b-subject");
   const details = document.getElementById("b-details");
   const place = document.getElementById("b-place");
+  const styleCustom = document.getElementById("b-style-custom");
 
   const state = { step: 1, style: "any", styleLabel: "Artist's choice", vibes: [], busy: false };
   const TOTAL = 4;
@@ -46,9 +47,37 @@
     b.addEventListener("click", () => {
       styleChips.querySelectorAll("button").forEach((x) => x.classList.remove("active"));
       b.classList.add("active");
+      if (styleCustom) styleCustom.value = "";
       state.style = b.dataset.v;
       state.styleLabel = b.textContent.trim();
       updateBrief();
+    })
+  );
+  // custom style — typing overrides the chip choice
+  if (styleCustom) {
+    styleCustom.addEventListener("input", () => {
+      const v = styleCustom.value.trim();
+      if (v) {
+        styleChips.querySelectorAll("button").forEach((x) => x.classList.remove("active"));
+        state.style = v;
+        state.styleLabel = v.length > 26 ? v.slice(0, 26) + "…" : v;
+      } else {
+        const any = styleChips.querySelector('[data-v="any"]');
+        styleChips.querySelectorAll("button").forEach((x) => x.classList.remove("active"));
+        any.classList.add("active");
+        state.style = "any";
+        state.styleLabel = "Artist's choice";
+      }
+      updateBrief();
+    });
+  }
+  // help toggles — describe each step
+  document.querySelectorAll(".help-toggle").forEach((t) =>
+    t.addEventListener("click", () => {
+      const ht = t.closest(".step-panel").querySelector(".help-text");
+      const open = ht.hidden;
+      ht.hidden = !open;
+      t.setAttribute("aria-expanded", open ? "true" : "false");
     })
   );
   document.getElementById("vibe-chips").querySelectorAll("button").forEach((b) =>
@@ -184,10 +213,17 @@
   regenBtn.addEventListener("click", () => runGeneration(true));
   restartBtn.addEventListener("click", () => {
     subject.value = ""; details.value = ""; place.value = "";
+    if (styleCustom) styleCustom.value = "";
     state.vibes = []; state.style = "any"; state.styleLabel = "Artist's choice";
     styleChips.querySelectorAll("button").forEach((x) => x.classList.remove("active"));
     styleChips.querySelector('[data-v="any"]').classList.add("active");
     document.querySelectorAll("#vibe-chips button.active").forEach((x) => x.classList.remove("active"));
+    // fully wipe the previous concept, not just hide it
+    cards.forEach((c) => {
+      c.className = "result-card";
+      c.querySelector(".result-frame").style.backgroundImage = "";
+      c.onclick = null;
+    });
     results.hidden = true; actions.hidden = true; status.textContent = ""; cooldownEl.textContent = "";
     updateBrief(); showStep(1);
     builder.scrollIntoView({ behavior: "smooth", block: "center" });

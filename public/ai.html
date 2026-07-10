@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@400;500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/site.css?v=7" />
+  <link rel="stylesheet" href="/css/site.css?v=8" />
 </head>
 <body>
   <div class="grain"></div><div class="vignette"></div>
@@ -46,8 +46,8 @@
     <div class="wrap ai-tool">
       <div class="section-head">
         <span class="idx" data-idx="01">Describe it</span>
-        <h2 class="rise"><span>Type your idea</span></h2>
-        <p>Subject, mood, placement, references — the more you give, the sharper the concept. We engineer it into a clean, stencil-ready prompt and render three directions.</p>
+        <h2 class="rise"><span>Build your concept</span></h2>
+        <p>Answer as much or as little as you like — even one word gets you three concepts. Each step below is optional and just sharpens the result. Tap the <b>?</b> on any step if you're unsure, type your own words anywhere, or use the suggestion chips.</p>
       </div>
 
       <div class="ai-form reveal" id="builder">
@@ -57,9 +57,13 @@
 
         <!-- STEP 1 — the idea (free) -->
         <div class="step-panel" data-step="1">
-          <p class="step-k">Step 1 of 4 · Your idea</p>
+          <div class="step-head">
+            <p class="step-k">Step 1 of 4 · Your idea</p>
+            <button type="button" class="help-toggle" aria-expanded="false" aria-label="What is this step?">?</button>
+          </div>
           <h3 class="step-q">What do you want tattooed?</h3>
-          <input id="b-subject" class="b-input" maxlength="140" placeholder="In your own words — e.g. twin daggers, a howling wolf, a rose…" />
+          <p class="help-text" hidden>The main subject of your tattoo — an animal, object, symbol, or scene. Just name it in a few words; you'll add detail on the next steps. This is the only step you need — even one word works.</p>
+          <input id="b-subject" class="b-input" maxlength="140" placeholder="Type your own — e.g. twin daggers, a howling wolf, a rose…" />
           <div class="chips-row" data-target="b-subject" data-mode="set">
             <span class="chip-lead">Or start from</span>
             <button type="button">Snake &amp; dagger</button>
@@ -87,9 +91,13 @@
 
         <!-- STEP 2 — details (free) -->
         <div class="step-panel" data-step="2" hidden>
-          <p class="step-k">Step 2 of 4 · Details</p>
+          <div class="step-head">
+            <p class="step-k">Step 2 of 4 · Details</p>
+            <button type="button" class="help-toggle" aria-expanded="false" aria-label="What is this step?">?</button>
+          </div>
           <h3 class="step-q">Add any details</h3>
-          <input id="b-details" class="b-input" maxlength="180" placeholder="Pose, objects, symmetry — e.g. crossed, wrapped handles, roses at the base" />
+          <p class="help-text" hidden>Extra elements and composition: what surrounds the subject, its pose, framing, or props. Optional — but the more you add, the sharper the concept. Tap chips to stack ideas, or type your own; separate them with commas.</p>
+          <input id="b-details" class="b-input" maxlength="180" placeholder="Type your own — e.g. crossed, wrapped handles, roses at the base" />
           <div class="chips-row" data-target="b-details" data-mode="append">
             <span class="chip-lead">Add</span>
             <button type="button">symmetrical</button>
@@ -113,10 +121,14 @@
           </div>
         </div>
 
-        <!-- STEP 3 — style (pick one) -->
+        <!-- STEP 3 — style (pick one or type) -->
         <div class="step-panel" data-step="3" hidden>
-          <p class="step-k">Step 3 of 4 · Style</p>
+          <div class="step-head">
+            <p class="step-k">Step 3 of 4 · Style</p>
+            <button type="button" class="help-toggle" aria-expanded="false" aria-label="What is this step?">?</button>
+          </div>
           <h3 class="step-q">Pick a style</h3>
+          <p class="help-text" hidden>The art style or technique your tattoo is drawn in — it changes the whole look. Pick one below, or type your own in the box (e.g. biomechanical, stick-and-poke, dark surrealism, sketchy grunge). Leave it on “Artist's choice” to let the AI decide.</p>
           <div class="chips-row single" id="style-chips">
             <button type="button" data-v="any" class="active">Artist's choice</button>
             <button type="button" data-v="delicate fine-line single-needle, thin crisp black lines, minimal shading">Fine line</button>
@@ -137,13 +149,18 @@
             <button type="button" data-v="anime manga line-art, clean bold cel-style outlines, dynamic">Anime</button>
             <button type="button" data-v="engraving woodcut etching style, dense parallel line shading, vintage illustration">Engraving</button>
           </div>
+          <input id="b-style-custom" class="b-input" style="margin-top:14px" maxlength="120" placeholder="…or type your own style — e.g. biomechanical, stick-and-poke, dark surrealism" />
         </div>
 
         <!-- STEP 4 — placement + finish -->
         <div class="step-panel" data-step="4" hidden>
-          <p class="step-k">Step 4 of 4 · Placement &amp; finish</p>
+          <div class="step-head">
+            <p class="step-k">Step 4 of 4 · Placement &amp; finish</p>
+            <button type="button" class="help-toggle" aria-expanded="false" aria-label="What is this step?">?</button>
+          </div>
           <h3 class="step-q">Where, and any finish?</h3>
-          <input id="b-place" class="b-input" maxlength="80" placeholder="Placement — e.g. inner forearm, sternum, full sleeve" />
+          <p class="help-text" hidden>Where the tattoo sits on the body and its overall finish. Placement shapes the proportions (a sleeve is tall, a sternum is wide); the finish sets the mood. Both optional — type your own placement or tap a chip, and pick any finishes that fit.</p>
+          <input id="b-place" class="b-input" maxlength="80" placeholder="Type your own — e.g. inner forearm, sternum, full sleeve" />
           <div class="chips-row" data-target="b-place" data-mode="set">
             <span class="chip-lead">Placement</span>
             <button type="button">Inner forearm</button>
@@ -245,7 +262,7 @@
     </div>
   </footer>
 
-  <script src="/js/site.js?v=7"></script>
-  <script src="/js/ai.js?v=7"></script>
+  <script src="/js/site.js?v=8"></script>
+  <script src="/js/ai.js?v=8"></script>
 </body>
 </html>
