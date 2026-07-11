@@ -151,18 +151,19 @@ export async function onRequestPost({ request, env }) {
       try {
         images = await cfaiImages(prompt, env);
       } catch (e) {
-        const quota = /4006|neuron|allocation/i.test(e.message || "");
+        const quota = /4006|neuron|allocation|limit/i.test(e.message || "");
         // Hugging Face is the only fallback that works from Cloudflare (token-based, not per-IP).
         if (env.HF_API_KEY) {
           const b = Math.floor(Math.random() * 2_000_000_000);
           images = [];
           for (let i = 0; i < N_IMAGES; i++) images.push(await huggingfaceOne(prompt, b + i, env));
-        } else if (quota) {
-          return Response.json({
-            error: "Free daily image limit reached — it resets at midnight UTC. Please try again then. (The studio can lift this by adding a free Hugging Face key or Cloudflare's paid plan.)",
-          }, { status: 429 });
         } else {
-          throw e;
+          // No fallback configured — never surface a raw 500; give a clean, actionable message.
+          return Response.json({
+            error: quota
+              ? "Free daily image limit reached — it resets at midnight UTC. Please try again then. (The studio can lift this with a free Hugging Face key or Cloudflare's paid plan.)"
+              : "The generator is busy right now — please try again in a moment.",
+          }, { status: 503 });
         }
       }
     } else if (provider === "pollinations") {
