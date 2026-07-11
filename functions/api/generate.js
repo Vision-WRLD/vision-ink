@@ -152,17 +152,14 @@ export async function onRequestPost({ request, env }) {
         images = await cfaiImages(prompt, env);
       } catch (e) {
         const quota = /4006|neuron|allocation/i.test(e.message || "");
+        // Hugging Face is the only fallback that works from Cloudflare (token-based, not per-IP).
         if (env.HF_API_KEY) {
           const b = Math.floor(Math.random() * 2_000_000_000);
           images = [];
           for (let i = 0; i < N_IMAGES; i++) images.push(await huggingfaceOne(prompt, b + i, env));
-        } else if (env.POLLINATIONS_TOKEN) {
-          const b = Math.floor(Math.random() * 2_000_000_000);
-          images = [];
-          for (let i = 0; i < N_IMAGES; i++) images.push(await pollinationsOne(prompt, b + i, env));
         } else if (quota) {
           return Response.json({
-            error: "Free daily image limit reached. It resets at midnight UTC — please try again then, or the studio can add more capacity.",
+            error: "Free daily image limit reached — it resets at midnight UTC. Please try again then. (The studio can lift this by adding a free Hugging Face key or Cloudflare's paid plan.)",
           }, { status: 429 });
         } else {
           throw e;
