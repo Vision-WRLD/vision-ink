@@ -56,7 +56,7 @@ async function cfaiImages(prompt, env) {
   for (let i = 0; i < N_IMAGES; i++) {
     const r = await env.AI.run(model, {
       prompt: `${prompt} (variation ${i + 1})`,
-      num_steps: 28,
+      num_steps: 12, // keep quality high but ~2.5x cheaper in neurons than 28 → free quota lasts longer
       guidance: 6,
       width: 1024,
       height: 1024,
@@ -146,7 +146,28 @@ export async function onRequestPost({ request, env }) {
     if (provider === "mock") {
       images = mock(prompt);
     } else if (provider === "cfai") {
-      images = await cfaiImages(prompt, env);
+      // Try Workers AI; on daily-quota (4006) fall back to any configured free provider,
+      // else a clear message — never a raw error.
+      try {
+        images = await cfaiImages(prompt, env);
+      } catch (e) {
+        const quota = /4006|neuron|allocation/i.test(e.message || "");
+        if (env.HF_API_KEY) {
+          const b = Math.floor(Math.random() * 2_000_000_000);
+          images = [];
+          for (let i = 0; i < N_IMAGES; i++) images.push(await huggingfaceOne(prompt, b + i, env));
+        } else if (env.POLLINATIONS_TOKEN) {
+          const b = Math.floor(Math.random() * 2_000_000_000);
+          images = [];
+          for (let i = 0; i < N_IMAGES; i++) images.push(await pollinationsOne(prompt, b + i, env));
+        } else if (quota) {
+          return Response.json({
+            error: "Free daily image limit reached. It resets at midnight UTC — please try again then, or the studio can add more capacity.",
+          }, { status: 429 });
+        } else {
+          throw e;
+        }
+      }
     } else if (provider === "pollinations") {
       images = [];
       for (let i = 0; i < N_IMAGES; i++) images.push(await pollinationsOne(prompt, 1000 + i, env));
